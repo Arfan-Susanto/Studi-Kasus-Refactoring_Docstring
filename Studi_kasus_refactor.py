@@ -91,6 +91,8 @@ class CafePriceCatalog(PriceCatalog):
         "latte": 30000,
         "cappuccino": 28000,
         "americano": 22000,
+        "macchiato": 32000,
+        "dalgona coffe": 23000
     }
 
     def get_item(self, name: str) -> Item:
@@ -109,7 +111,7 @@ class CafePriceCatalog(PriceCatalog):
         """
         if name not in self.PRICES:
             LOGGER2.error(f"Item dengan nama '{name}' tidak ada di menu")
-            raise ValueError("Pesanan dihentikan")
+            raise ValueError("Pesanan dihentikan, silahkan sesuaikan menu cafe ini")
         else:
             price = self.PRICES[name]
             item = Item(name=name, price=price)
@@ -453,18 +455,29 @@ class OrderProcessor:
 
 print("=== PESANAN 1 ===")
 processor = OrderProcessor(
-    promo=DineInPromo(),
-    payment=QrisPayment(),
-    catalog=CafePriceCatalog(),
-    printer=ReceiptPrinter()
+    promo = DineInPromo(),
+    payment = QrisPayment(),
+    catalog = CafePriceCatalog(),
+    printer = ReceiptPrinter()
 )
 processor.process(["espresso", "latte", "americano"])
 
 print("\n=== PESANAN 2 (OCP EXTENSION TEST) ===")
 processor = OrderProcessor(
-    promo=HappyHourPromo(),  # fitur promo baru, tidak mengubah kode lain
-    payment=CashPayment(),
-    catalog=CafePriceCatalog(),
-    printer=ReceiptPrinter()
+    promo = HappyHourPromo(),  # fitur promo baru, tidak mengubah kode lain
+    payment = CashPayment(),
+    catalog = CafePriceCatalog(),
+    printer = ReceiptPrinter()
 )
 processor.process(["latte", "latte", "latte"])
+
+# ?? Contoh penggunaan yang salah ??
+
+print("\n=== PESANAN YANG SALAH ===")
+processor = OrderProcessor(
+    promo = TakeAwayPromo(),
+    payment = EWalletPayment(),
+    catalog = CafePriceCatalog(),
+    printer = ReceiptPrinter()
+)
+processor.process(["americano", "cappuccino", "nasi goreng"]) # <- nasi goreng tidak dalam menu cafe, Memunculkan ValueError dan "pesanan dihentikan"
