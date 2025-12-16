@@ -302,7 +302,7 @@ class CashPayment(PaymentStrategy):
         Returns:
             int: Total harga setelah dipilih metode pembayaran dengan biaya tambahan.
         """
-        LOGGER4.info(f"Total semua tanpa dikenai biaya: {total}")
+        LOGGER4.info(f"Total semua tanpa dikenai biaya tambahan: {total}")
         return total
 
 class QrisPayment(PaymentStrategy):
