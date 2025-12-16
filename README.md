@@ -14,3 +14,6 @@ Studi kasus pada proyek ini mendemonstrasikan implementasi prinsip SOLID (SRP, O
     ```bash
     Studi_kasus_refactor.py
     ```
+
+### Histori Perubahan (Log)
+Kode akan dikelola menggunakan Git. Lihat [link ke Github ke Commit History](https://github.com/Arfan-Susanto/Studi-Kasus-Refactoring_Docstring/commits/main/).
